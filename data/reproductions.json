@@ -2,7 +2,7 @@
   {
     "id": "RC-2026-001",
     "doi": "10.1093/ej/ueab096",
-    "title": "Forsythe (2022) — Why don't firms hire young workers during recessions?",
+    "title": "Forsythe (2022): Why don't firms hire young workers during recessions?",
     "field": "Economics",
     "outcome": "computationally reproducible",
     "engine": "Claude Code",
@@ -22,7 +22,7 @@
   {
     "id": "RC-2026-002",
     "doi": "10.1093/qje/qjac034",
-    "title": "Alan, Corekcioglu & Sutter (2023) — Improving workplace climate in large corporations",
+    "title": "Alan, Corekcioglu & Sutter (2023): Improving workplace climate in large corporations",
     "field": "Economics",
     "outcome": "computational issues",
     "engine": "opencode",
@@ -42,7 +42,7 @@
   {
     "id": "RC-2026-003",
     "doi": "10.1093/restud/rdab056",
-    "title": "Carrera et al. (2022) — Who chooses commitment?",
+    "title": "Carrera et al. (2022): Who chooses commitment?",
     "field": "Economics",
     "outcome": "computationally reproducible",
     "engine": "Claude Code",
@@ -61,7 +61,7 @@
   {
     "id": "RC-2026-004",
     "doi": "10.1162/rest_a_01182",
-    "title": "Siddique et al. (2024) — Raising health awareness in rural communities",
+    "title": "Siddique et al. (2024): Raising health awareness in rural communities",
     "field": "Economics",
     "outcome": "technical failure",
     "engine": "Codex",
@@ -80,7 +80,7 @@
   {
     "id": "RC-2026-005",
     "doi": "10.1162/rest_a_01182",
-    "title": "Siddique et al. (2024) — alternative run (independent agent)",
+    "title": "Siddique et al. (2024): alternative run (independent agent)",
     "field": "Economics",
     "outcome": "computational issues",
     "engine": "Gemini CLI",
@@ -99,7 +99,7 @@
   {
     "id": "RC-2026-006",
     "doi": "10.1162/jmlr.2014.12345",
-    "title": "Javanmard & Montanari (2014) — Confidence intervals for linear regression",
+    "title": "Javanmard & Montanari (2014): Confidence intervals for linear regression",
     "field": "Machine Learning",
     "outcome": "computationally reproducible",
     "engine": "Claude Code",

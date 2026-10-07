@@ -81,7 +81,7 @@
       var ok = found.has(normalize(req.name));
       dot.className = 'dot ' + (ok ? 'ok' : 'missing');
       li.appendChild(dot);
-      li.appendChild(document.createTextNode(req.label + (ok ? '' : ' — missing')));
+      li.appendChild(document.createTextNode(req.label + (ok ? '' : ' - missing')));
       checklistList.appendChild(li);
       if (ok) present++;
     });
@@ -92,9 +92,9 @@
     result.hidden = true;
     status.textContent = 'Selected ' + paths.length + ' file(s). ' + present + '/' + REQUIRED.length + ' required files found.';
     if (complete) {
-      status.textContent += ' Complete — sign off below to submit.';
+      status.textContent += ' Complete - sign off below to submit.';
     } else {
-      status.textContent += ' Some required files are missing — the report is not reproducible yet.';
+      status.textContent += ' Some required files are missing - the report is not reproducible yet.';
     }
   }
 
@@ -158,17 +158,17 @@
   }
 
   function fmtDate(d) {
-    if (!d) return '—';
+    if (!d) return '-';
     var parts = d.split('-');
     return parts.length === 3 ? parts[2] + '/' + parts[1] + '/' + parts[0] : d;
   }
 
   function programsSummary(programs) {
-    if (!programs || !programs.length) return '—';
+    if (!programs || !programs.length) return '-';
     var text = programs.map(function (p) { return p.name + ' ' + p.version; }).join(' · ');
     var detail = programs.map(function (p) {
       var pkgs = p.packages ? Object.keys(p.packages).map(function (k) { return k + ' ' + p.packages[k]; }).join(', ') : '';
-      return p.name + ' ' + p.version + (p.lockfile ? ' (' + p.lockfile + ')' : '') + (pkgs ? ' — ' + pkgs : '');
+      return p.name + ' ' + p.version + (p.lockfile ? ' (' + p.lockfile + ')' : '') + (pkgs ? ' - ' + pkgs : '');
     }).join('\n');
     var safe = detail.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
     return '<span class="muted" title="' + safe + '">' + text + '</span>';
@@ -181,12 +181,12 @@
       tr.innerHTML =
         '<td><a href="' + r.repo_url + '" target="_blank" rel="noopener">' + (r.title || 'Untitled') + '</a>' +
           '<br><span class="muted">' + (r.doi || '') + '</span></td>' +
-        '<td>' + (r.field || '—') + '</td>' +
+        '<td>' + (r.field || '-') + '</td>' +
         '<td>' + pill(r.outcome) + '</td>' +
-        '<td>' + (r.engine || '—') + '<br><span class="muted">' + (r.model || '') + '</span></td>' +
-        '<td>' + (r.repro_standard_version || '—') + '</td>' +
+        '<td>' + (r.engine || '-') + '<br><span class="muted">' + (r.model || '') + '</span></td>' +
+        '<td>' + (r.repro_standard_version || '-') + '</td>' +
         '<td>' + programsSummary(r.programs) + '</td>' +
-        '<td>' + (r.signature === 'signed' ? (r.signed_by || '✓') : '—') + '</td>' +
+        '<td>' + (r.signature === 'signed' ? (r.signed_by || '✓') : '-') + '</td>' +
         '<td>' + fmtDate(r.date) + '</td>' +
         '<td><a href="' + r.repo_url + '" target="_blank" rel="noopener">Report</a></td>';
       tbody.appendChild(tr);

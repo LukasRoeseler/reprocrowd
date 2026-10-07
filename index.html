@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ReproCrowd — crowdsourced numerical reproductions</title>
+  <title>ReproCrowd: crowdsourced numerical reproductions</title>
   <meta name="description" content="ReproCrowd is a crowdsourced platform for numerical reproductions. Find a reprocheck prompt for your LLM, submit a standardized report, get it signed, and share it with the field." />
   <meta name="theme-color" content="#853953" />
   <link rel="icon" type="image/png" href="./hex-sticker.png" />
@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
+  <div class="ribbon" aria-hidden="true">Proof of Concept. No real data yet.</div>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#top">
@@ -21,7 +22,7 @@
       </a>
       <nav class="main-nav" aria-label="Primary">
         <a href="#about">What it is</a>
-        <a href="#prompt">The prompt</a>
+        <a href="#prompt">Prompt</a>
         <a href="#upload">Submit</a>
         <a href="#reproductions">Reproductions</a>
       </nav>
@@ -33,11 +34,11 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <h1 class="hero-title">A crowd of crows, a crowd of reproductions.</h1>
+          <h1 class="hero-title">Crowdsourcing AI reproductions</h1>
           <p class="hero-sub">
-            ReproCrowd channels the ad-hoc numerical reproductions people already run into a
-            shared, citable, and comparable record. Pick a paper, feed the prompt to your LLM,
-            submit the report, get it signed, and share it with the field.
+            With our infrastructure, you can run a check for numerical reproducibility within
+            minutes. Check it, sign it with your name, and upload it for the entire community
+            to find it.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#prompt">Get the prompt</a>
@@ -55,9 +56,10 @@
       <div class="container">
         <h2 class="section-title">What is ReproCrowd?</h2>
         <p class="lead">
-          Many researchers already reproduce the numbers of a paper in their field — but
-          unsystematically, on their own machine, with the results never leaving their laptop.
-          ReproCrowd makes that systematic.
+          Many researchers already attempt to reproduce the results of papers in their field,
+          but in an unsystematic way. We provide a standardized prompt, a way for you to sign
+          and submit results, and the means to disseminate your reports in a human- and
+          machine-friendly way.
         </p>
         <div class="process">
           <div class="process-arrow" aria-hidden="true">
@@ -70,13 +72,13 @@
             <li class="card">
               <span class="card-step">1</span>
               <h3>Find a prompt</h3>
-              <p>Pick a paper in your field. Copy the ReproCrowd prompt and the versioned rule pack, and feed them to the LLM you already use.</p>
+              <p>Pick a paper with openly available data and code from your field. Copy the ReproCrowd prompt and the versioned rule pack, and feed them to the LLM you already use.</p>
             </li>
             <li class="flow-arrow" aria-hidden="true">→</li>
             <li class="card">
               <span class="card-step">2</span>
               <h3>Run the reprocheck</h3>
-              <p>Your agent certifies the paper's <strong>computational reproducibility</strong> — running the shipped code and data as a Reproduction Study.</p>
+              <p>Your agent certifies the paper's <strong>computational reproducibility</strong>, running the shipped code and data as a Reproduction Study.</p>
             </li>
             <li class="flow-arrow" aria-hidden="true">→</li>
             <li class="card">
@@ -93,22 +95,16 @@
           </ol>
         </div>
 
-        <div class="notice">
-          <strong>What a ReproCrowd certificate claims.</strong>
-          It certifies that a paper's computation is reproducible and executable — a
-          <em>numerical/computational</em> outcome, not a robustness test. It never rules on
-          whether the science is correct, and it never fills the robustness outcome field.
-        </div>
       </div>
     </section>
 
     <!-- The prompt -->
     <section id="prompt" class="section section-alt">
       <div class="container">
-        <h2 class="section-title">The prompt</h2>
+        <h2 class="section-title">Prompt</h2>
         <p class="lead">
           Tell your coding agent (Claude, Codex, DeepSeek, …) to certify the computational
-          reproducibility of a paper. The agent needs nothing else — the rule pack is
+          reproducibility of a paper. The agent needs nothing else. The rule pack is
           referenced by the prompt and pinned in the report.
         </p>
 
@@ -119,9 +115,14 @@
           </div>
           <pre id="prompt-text"><code>ReproCrowd certification for `10.XXXX/YYYY`.
 
+Link to the paper and to its materials, data, and code:
+- Paper: <URL to the paper / DOI>
+- Materials, data, and code: <URL to the repository or archive>
+
 Certify the computational reproducibility of this paper: run its shipped code and data as a
 Reproduction Study (same methodology, same tools) and record faithfully what reproduces and
-what does not. Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned
+what does not. Do NOT upload the original data or code; the licence may not permit it. Link to
+them instead. Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned
 in the report). Produce the artefacts per WORKFLOW.md into a new directory `<slug>-certification`.
 
 Certify that the computation is reproducible and executable. Do NOT rule on whether the
@@ -131,7 +132,7 @@ engine, model + provider, rules version, and environment you used.</code></pre>
 
         <h3 class="subsection-title">How to use it</h3>
         <ol class="steps">
-          <li><strong>Copy the prompt.</strong> Replace <code>10.XXXX/YYYY</code> with the paper's DOI.</li>
+          <li><strong>Copy the prompt.</strong> Replace <code>10.XXXX/YYYY</code> with the paper's DOI, and add the links to its materials, data, and code.</li>
           <li><strong>Feed it to your LLM.</strong> Paste it into the coding agent you already use, in a fresh directory.</li>
           <li><strong>Run it.</strong> The agent reads the rule pack, builds the reproducible pipeline, and certifies the computation.</li>
           <li><strong>Submit.</strong> The agent writes <code>certificate.json</code>, <code>certificate.md</code>, <code>SIGN-OFF.md</code> and <code>flora-entry.json</code> and opens a pull request.</li>
@@ -212,7 +213,9 @@ engine, model + provider, rules version, and environment you used.</code></pre>
           <code>flora-entry.json</code>), the pipeline and pinned environment
           (<code>myst.yml</code>, <code>pixi.toml</code>/<code>pixi.lock</code>, <code>Snakefile</code>,
           <code>environment.json</code>), and the record (<code>nanopubs/PUBLISHED.md</code>,
-          <code>CITATION.cff</code>) — so anyone can re-run the certification, not just read it.
+          <code>CITATION.cff</code>), so anyone can re-run the certification, not just read it.
+          The original data and code are never uploaded; only linked, since their licence may not
+          permit redistribution.
         </p>
       </div>
     </section>
@@ -265,7 +268,7 @@ engine, model + provider, rules version, and environment you used.</code></pre>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <span>ReproCrowd — crowdsourced numerical reproductions.</span>
+      <span>ReproCrowd: crowdsourced numerical reproductions.</span>
       <span>
         <a href="https://github.com/LukasRoeseler/reprocrowd" target="_blank" rel="noopener">GitHub</a>
         · <a href="https://forrt.org/crowd-repro/v1.0.0" target="_blank" rel="noopener">Rule pack</a>
