@@ -25,7 +25,7 @@
     });
   }
 
-  /* ---------- Upload mock-up ---------- */
+  /* ---------- Upload, sign-off & submit ---------- */
   var input = document.getElementById('folder-input');
   var dropZone = document.getElementById('drop-zone');
   var status = document.getElementById('upload-status');
@@ -33,20 +33,36 @@
   var checklistList = document.getElementById('checklist-list');
   var actions = document.getElementById('upload-actions');
   var result = document.getElementById('submit-result');
-  var mockSubmit = document.getElementById('mock-submit');
+  var submitBtn = document.getElementById('submit-btn');
 
-  // Required files for a FORRT reproduction (yml config + Anne's essentials + ReproCrowd outputs)
+  // Required files for a self-reproducible FORRT reproduction (report + pipeline + pinned environment)
   var REQUIRED = [
     { name: 'myst.yml', label: '.yml config (myst.yml)' },
     { name: 'pixi.toml', label: 'pixi.toml' },
     { name: 'pixi.lock', label: 'pixi.lock' },
     { name: 'Snakefile', label: 'Snakefile' },
+    { name: 'environment.json', label: 'environment.json (program inventory)' },
     { name: 'nanopubs/PUBLISHED.md', label: 'nanopubs/PUBLISHED.md' },
     { name: 'CITATION.cff', label: 'CITATION.cff' },
     { name: 'certificate.json', label: 'certificate.json' },
+    { name: 'certificate.md', label: 'certificate.md' },
     { name: 'SIGN-OFF.md', label: 'SIGN-OFF.md' },
     { name: 'flora-entry.json', label: 'flora-entry.json' }
   ];
+
+  var GITHUB_OWNER = 'LukasRoeseler';
+  var GITHUB_REPO = 'reprocrowd';
+  var PR_URL = 'https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/compare';
+
+  var signoff = document.getElementById('signoff');
+  var signoffName = document.getElementById('signoff-name');
+  var signoffOrcid = document.getElementById('signoff-orcid');
+  var signoffRole = document.getElementById('signoff-role');
+  var signoffAccept = document.getElementById('signoff-accept');
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
 
   function normalize(p) { return (p || '').replace(/\\/g, '/').toLowerCase(); }
 
@@ -70,13 +86,15 @@
       if (ok) present++;
     });
     checklist.hidden = false;
-    actions.hidden = false;
+    var complete = present === REQUIRED.length;
+    signoff.hidden = !complete;
+    actions.hidden = !complete;
     result.hidden = true;
     status.textContent = 'Selected ' + paths.length + ' file(s). ' + present + '/' + REQUIRED.length + ' required files found.';
-    if (present === REQUIRED.length) {
-      status.textContent += ' Looks complete.';
+    if (complete) {
+      status.textContent += ' Complete — sign off below to submit.';
     } else {
-      status.textContent += ' Some required files are missing — the report may not be ready to publish.';
+      status.textContent += ' Some required files are missing — the report is not reproducible yet.';
     }
   }
 
@@ -94,11 +112,31 @@
       if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
     });
   }
-  if (mockSubmit) {
-    mockSubmit.addEventListener('click', function () {
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function () {
+      var name = signoffName.value.trim();
+      var orcid = signoffOrcid.value.trim();
+      var role = signoffRole.value;
+      var accepted = signoffAccept.checked;
+      if (!name || !accepted) {
+        result.hidden = false;
+        result.className = 'submit-result ok';
+        result.innerHTML = '<strong>Almost there.</strong> Enter your name and tick the acceptance box to sign off before submitting.';
+        return;
+      }
       result.hidden = false;
       result.className = 'submit-result ok';
-      result.innerHTML = '<strong>Submitted (mock-up).</strong> In production this would open a pull request against a ReproCrowd repository for a human to review and sign. No data was sent anywhere.';
+      result.innerHTML =
+        '<strong>Signed off by ' + escapeHtml(name) + ' (' + escapeHtml(role) +
+        (orcid ? ' · ORCID ' + escapeHtml(orcid) : '') + ').</strong> ' +
+        'Your folder is ready. To save it on GitHub and open a pull request for a human to review:' +
+        '<pre class="git-cmds"><code>cd &lt;slug&gt;-certification\n' +
+        'git init\n' +
+        'git add -A\n' +
+        'git commit -m "ReproCrowd certification"\n' +
+        'git remote add origin https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '.git\n' +
+        'git push -u origin main</code></pre>' +
+        '<a class="btn btn-primary" target="_blank" rel="noopener" href="' + PR_URL + '">Open a pull request on GitHub</a>';
     });
   }
 

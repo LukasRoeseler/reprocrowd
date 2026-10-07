@@ -146,13 +146,14 @@ engine, model + provider, rules version, and environment you used.</code></pre>
       </div>
     </section>
 
-    <!-- Upload (mock-up) -->
+    <!-- Upload + sign-off -->
     <section id="upload" class="section">
       <div class="container">
         <h2 class="section-title">Submit a reproduction</h2>
         <p class="lead">
-          This is a mock-up: select the certification folder your agent produced, and we'll
-          check it contains what a FORRT reproduction needs. No data leaves your machine.
+          Upload the <code>&lt;slug&gt;-certification</code> folder your agent produced. We check it
+          contains everything a fully reproducible FORRT reproduction needs, then you sign it off
+          and we guide you through saving it on GitHub as a pull request for a human to review.
         </p>
 
         <div class="upload-card">
@@ -165,22 +166,53 @@ engine, model + provider, rules version, and environment you used.</code></pre>
           <div class="upload-status" id="upload-status" aria-live="polite"></div>
 
           <div class="checklist" id="checklist" hidden>
-            <h3>Required files</h3>
+            <h3>Required for a reproducible report</h3>
             <ul id="checklist-list"></ul>
           </div>
 
+          <div class="signoff" id="signoff" hidden>
+            <h3>Sign off</h3>
+            <p class="muted">
+              The prompter (the person who nominated the paper) reviews and signs the single
+              <code>SIGN-OFF.md</code>. Signing confirms it is a numerical/computational
+              reproduction, not a robustness test, and accepts it into FLoRA with the AI-generated tag.
+            </p>
+            <div class="signoff-fields">
+              <label>Name
+                <input id="signoff-name" type="text" placeholder="Your name" />
+              </label>
+              <label>ORCID
+                <input id="signoff-orcid" type="text" placeholder="0000-0000-0000-0000" />
+              </label>
+              <label>Role
+                <select id="signoff-role">
+                  <option value="codechecker">Codechecker</option>
+                  <option value="reviewer">Reviewer</option>
+                  <option value="author">Author</option>
+                </select>
+              </label>
+            </div>
+            <label class="signoff-check">
+              <input id="signoff-accept" type="checkbox" />
+              I have reviewed this certification and its artefacts, and accept it for FLoRA as an
+              AI-generated numerical/computational reproduction.
+            </label>
+          </div>
+
           <div class="upload-actions" id="upload-actions" hidden>
-            <button id="mock-submit" class="btn btn-primary">Submit for review (mock-up)</button>
+            <button id="submit-btn" class="btn btn-primary">Submit to GitHub for review</button>
           </div>
 
           <div class="submit-result" id="submit-result" hidden></div>
         </div>
 
         <p class="note">
-          A complete FORRT reproduction folder typically carries: a <code>.yml</code> config
-          (e.g. <code>myst.yml</code>), <code>pixi.toml</code>/<code>pixi.lock</code>,
-          <code>Snakefile</code>, <code>nanopubs/PUBLISHED.md</code>, <code>CITATION.cff</code>,
-          <code>certificate.json</code>, <code>SIGN-OFF.md</code> and <code>flora-entry.json</code>.
+          A complete, self-reproducible reproduction folder carries the report artefacts
+          (<code>certificate.json</code>, <code>certificate.md</code>, <code>SIGN-OFF.md</code>,
+          <code>flora-entry.json</code>), the pipeline and pinned environment
+          (<code>myst.yml</code>, <code>pixi.toml</code>/<code>pixi.lock</code>, <code>Snakefile</code>,
+          <code>environment.json</code>), and the record (<code>nanopubs/PUBLISHED.md</code>,
+          <code>CITATION.cff</code>) — so anyone can re-run the certification, not just read it.
         </p>
       </div>
     </section>

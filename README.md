@@ -12,9 +12,11 @@ This repository hosts the public website (GitHub Pages) for ReproCrowd.
 
 ## Website
 
-- `index.html` — what ReproCrowd is, the prompt, a submission mock-up, and a searchable
+- `index.html` — what ReproCrowd is, the prompt, a submission + sign-off flow, and a searchable
   reproductions table linked to the [FLoRA Replication Atlas](https://forrt.org/flora-replication-atlas).
-- `css/style.css`, `js/app.js` — styling and interactivity (no backend; the upload is a mock-up).
+- `css/style.css`, `js/app.js` — styling and interactivity. The upload validates the
+  self-reproducible bundle, collects a sign-off, and guides the user through saving the folder on
+  GitHub as a pull request (the site itself is static; pushing happens via the shown git commands).
 - `data/reproductions.json` — seed rows for the reproductions table.
 - `hex-sticker.png` — the ReproCrowd hex sticker (transparent background, cropped from `logo.png`).
 - `logo.png` — the full source logo.

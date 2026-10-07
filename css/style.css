@@ -340,6 +340,50 @@ a { color: var(--accent-dark); }
 .dot.missing { background: var(--bad); }
 
 .upload-actions { margin-top: 1.2rem; }
+.signoff {
+  margin-top: 1.2rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.1rem;
+}
+.signoff h3 { margin: 0 0 .5rem; font-size: 1rem; }
+.signoff .muted { font-size: .9rem; margin: 0 0 .8rem; }
+.signoff-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: .8rem;
+  margin: 0 0 .9rem;
+}
+.signoff-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  font-size: .85rem;
+  color: var(--muted);
+}
+.signoff-fields input,
+.signoff-fields select {
+  padding: .5rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  color: var(--ink);
+}
+.signoff-check {
+  display: flex;
+  gap: .5rem;
+  align-items: flex-start;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+.git-cmds {
+  background: var(--alt-bg);
+  padding: .9rem 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: .8rem 0;
+}
+.git-cmds code { font-size: .85rem; color: var(--ink); }
+.submit-result a.btn { margin-top: .5rem; }
 .submit-result {
   margin-top: 1.2rem;
   padding: 1rem 1.2rem;
@@ -417,4 +461,5 @@ a { color: var(--accent-dark); }
   .process-arrow { display: none; }
   .process-cards { flex-direction: column; }
   .flow-arrow { transform: rotate(90deg); }
+  .signoff-fields { grid-template-columns: 1fr; }
 }
