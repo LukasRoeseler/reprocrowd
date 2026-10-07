@@ -115,9 +115,7 @@
           </div>
           <pre id="prompt-text"><code>ReproCrowd certification for `10.XXXX/YYYY`.
 
-Link to the paper and to its materials, data, and code:
-- Paper: <URL to the paper / DOI>
-- Materials, data, and code: <URL to the repository or archive>
+Link to the paper's materials, data, and code: <URL to the repository or archive>
 
 Certify the computational reproducibility of this paper: run its shipped code and data as a
 Reproduction Study (same methodology, same tools) and record faithfully what reproduces and
@@ -132,7 +130,7 @@ engine, model + provider, rules version, and environment you used.</code></pre>
 
         <h3 class="subsection-title">How to use it</h3>
         <ol class="steps">
-          <li><strong>Copy the prompt.</strong> Replace <code>10.XXXX/YYYY</code> with the paper's DOI, and add the links to its materials, data, and code.</li>
+          <li><strong>Copy the prompt.</strong> Replace <code>10.XXXX/YYYY</code> with the paper's DOI and add the link to its materials, data, and code.</li>
           <li><strong>Feed it to your LLM.</strong> Paste it into the coding agent you already use, in a fresh directory.</li>
           <li><strong>Run it.</strong> The agent reads the rule pack, builds the reproducible pipeline, and certifies the computation.</li>
           <li><strong>Submit.</strong> The agent writes <code>certificate.json</code>, <code>certificate.md</code>, <code>SIGN-OFF.md</code> and <code>flora-entry.json</code> and opens a pull request.</li>
@@ -141,7 +139,8 @@ engine, model + provider, rules version, and environment you used.</code></pre>
 
         <p class="note">
           Reports are comparable because the <strong>rule pack version, engine, model and
-          provider</strong> are all recorded in the report. See the
+          provider</strong> are all recorded in the report. The exact prompt is saved as
+          <a href="./prompt.txt" target="_blank" rel="noopener">prompt.txt</a>. See the
           <a href="https://forrt.org/crowd-repro/v1.0.0" target="_blank" rel="noopener">rule pack v1.0.0</a>.
         </p>
       </div>

@@ -4,9 +4,7 @@
   /* ---------- Copy prompt ---------- */
   var copyBtn = document.getElementById('copy-prompt');
   if (copyBtn) {
-    copyBtn.addEventListener('click', function () {
-      var code = document.querySelector('#prompt-text code');
-      var text = code ? code.textContent : '';
+    function copyText(text) {
       var done = function () {
         copyBtn.textContent = 'Copied';
         setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1600);
@@ -22,6 +20,16 @@
         document.body.removeChild(ta);
         done();
       }
+    }
+    copyBtn.addEventListener('click', function () {
+      // The exact prompt is saved in prompt.txt; copy that, falling back to the inline text.
+      fetch('./prompt.txt')
+        .then(function (res) { return res.text(); })
+        .then(function (text) { copyText(text.trim()); })
+        .catch(function () {
+          var code = document.querySelector('#prompt-text code');
+          copyText(code ? code.textContent : '');
+        });
     });
   }
 

@@ -1,0 +1,13 @@
+ReproCrowd certification for `10.XXXX/YYYY`.
+
+Link to the paper's materials, data, and code: <URL to the repository or archive>
+
+Certify the computational reproducibility of this paper: run its shipped code and data as a
+Reproduction Study (same methodology, same tools) and record faithfully what reproduces and
+what does not. Do NOT upload the original data or code; the licence may not permit it. Link to
+them instead. Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned
+in the report). Produce the artefacts per WORKFLOW.md into a new directory `<slug>-certification`.
+
+Certify that the computation is reproducible and executable. Do NOT rule on whether the
+scientific conclusion is correct. Use the FORRT nanopublication chain vocabulary. Report the
+engine, model + provider, rules version, and environment you used.

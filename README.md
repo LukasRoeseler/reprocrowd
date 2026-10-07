@@ -14,6 +14,7 @@ This repository hosts the public website (GitHub Pages) for ReproCrowd.
 
 - `index.html` - what ReproCrowd is, the prompt, a submission + sign-off flow, and a searchable
   reproductions table linked to the [FLoRA Replication Atlas](https://forrt.org/flora-replication-atlas).
+- `prompt.txt` - the exact certification prompt (the copy button reads this file).
 - `css/style.css`, `js/app.js` - styling and interactivity. The upload validates the
   self-reproducible bundle, collects a sign-off, and guides the user through saving the folder on
   GitHub as a pull request (the site itself is static; pushing happens via the shown git commands).
