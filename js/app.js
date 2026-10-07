@@ -43,19 +43,19 @@
   var result = document.getElementById('submit-result');
   var submitBtn = document.getElementById('submit-btn');
 
-  // Required files for a self-reproducible FORRT reproduction (report + pipeline + pinned environment)
+  // Files needed for a ReproCrowd submission. Required = block submission; recommended = full reproducibility (optional).
   var REQUIRED = [
-    { name: 'myst.yml', label: '.yml config (myst.yml)' },
-    { name: 'pixi.toml', label: 'pixi.toml' },
-    { name: 'pixi.lock', label: 'pixi.lock' },
-    { name: 'Snakefile', label: 'Snakefile' },
-    { name: 'environment.json', label: 'environment.json (program inventory)' },
-    { name: 'nanopubs/PUBLISHED.md', label: 'nanopubs/PUBLISHED.md' },
-    { name: 'CITATION.cff', label: 'CITATION.cff' },
-    { name: 'certificate.json', label: 'certificate.json' },
-    { name: 'certificate.md', label: 'certificate.md' },
-    { name: 'SIGN-OFF.md', label: 'SIGN-OFF.md' },
-    { name: 'flora-entry.json', label: 'flora-entry.json' }
+    { name: 'certificate.json', label: 'certificate.json', required: true },
+    { name: 'certificate.md', label: 'certificate.md', required: true },
+    { name: 'SIGN-OFF.md', label: 'SIGN-OFF.md', required: true },
+    { name: 'flora-entry.json', label: 'flora-entry.json', required: true },
+    { name: 'environment.json', label: 'environment.json (program inventory)', required: true },
+    { name: 'myst.yml', label: '.yml config (myst.yml)', required: false },
+    { name: 'pixi.toml', label: 'pixi.toml', required: false },
+    { name: 'pixi.lock', label: 'pixi.lock', required: false },
+    { name: 'Snakefile', label: 'Snakefile', required: false },
+    { name: 'nanopubs/PUBLISHED.md', label: 'nanopubs/PUBLISHED.md', required: false },
+    { name: 'CITATION.cff', label: 'CITATION.cff', required: false }
   ];
 
   var GITHUB_OWNER = 'LukasRoeseler';
@@ -74,6 +74,13 @@
 
   function normalize(p) { return (p || '').replace(/\\/g, '/').toLowerCase(); }
 
+  // Match a required path even when the whole folder is dropped (paths are prefixed with the folder name).
+  function hasPath(found, name) {
+    if (found.has(name)) return true;
+    var suffix = '/' + name;
+    return Array.from(found).some(function (p) { return p.endsWith(suffix); });
+  }
+
   function handleFiles(fileList) {
     var paths = [];
     for (var i = 0; i < fileList.length; i++) {
@@ -81,28 +88,31 @@
       paths.push((f.webkitRelativePath || f.name || '').replace(/\\/g, '/'));
     }
     var found = new Set(paths.map(normalize));
-    var present = 0;
+    var requiredPresent = 0;
+    var requiredTotal = 0;
     checklistList.innerHTML = '';
     REQUIRED.forEach(function (req) {
+      var ok = hasPath(found, normalize(req.name));
       var li = document.createElement('li');
       var dot = document.createElement('span');
-      var ok = found.has(normalize(req.name));
-      dot.className = 'dot ' + (ok ? 'ok' : 'missing');
+      dot.className = 'dot ' + (ok ? 'ok' : (req.required ? 'missing' : 'rec'));
       li.appendChild(dot);
-      li.appendChild(document.createTextNode(req.label + (ok ? '' : ' - missing')));
+      var text = req.label + (req.required ? '' : ' (recommended)');
+      if (!ok && req.required) text += ' - missing';
+      li.appendChild(document.createTextNode(text));
       checklistList.appendChild(li);
-      if (ok) present++;
+      if (req.required) { requiredTotal++; if (ok) requiredPresent++; }
     });
     checklist.hidden = false;
-    var complete = present === REQUIRED.length;
+    var complete = requiredPresent === requiredTotal;
     signoff.hidden = !complete;
     actions.hidden = !complete;
     result.hidden = true;
-    status.textContent = 'Selected ' + paths.length + ' file(s). ' + present + '/' + REQUIRED.length + ' required files found.';
+    status.textContent = 'Selected ' + paths.length + ' file(s). ' + requiredPresent + '/' + requiredTotal + ' required files found.';
     if (complete) {
       status.textContent += ' Complete - sign off below to submit.';
     } else {
-      status.textContent += ' Some required files are missing - the report is not reproducible yet.';
+      status.textContent += ' Some required files are missing.';
     }
   }
 

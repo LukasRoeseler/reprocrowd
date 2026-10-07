@@ -356,6 +356,15 @@ a { color: var(--accent-dark); }
 }
 .dot.ok { background: var(--ok); }
 .dot.missing { background: var(--bad); }
+.dot.rec { background: var(--warn); }
+.checklist-legend {
+  display: flex;
+  gap: .8rem;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: .85rem;
+}
+.checklist-legend .dot { width: 12px; height: 12px; display: inline-block; }
 
 .upload-actions { margin-top: 1.2rem; }
 .signoff {
