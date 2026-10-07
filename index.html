@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReproCrowd — crowdsourced numerical reproductions</title>
+  <meta name="description" content="ReproCrowd is a crowdsourced platform for numerical reproductions. Find a reprocheck prompt for your LLM, submit a standardized report, get it signed, and share it with the field." />
+  <link rel="icon" type="image/png" href="./logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">
+        <img src="./logo.png" alt="ReproCrowd logo" class="brand-logo" />
+        <span class="brand-name">ReproCrowd</span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="#about">What it is</a>
+        <a href="#prompt">The prompt</a>
+        <a href="#upload">Submit</a>
+        <a href="#reproductions">Reproductions</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero-title">A crowd of crows, a crowd of reproductions.</h1>
+        <p class="hero-sub">
+          ReproCrowd channels the ad-hoc numerical reproductions people already run into a
+          shared, citable, and comparable record. Pick a paper, feed the prompt to your LLM,
+          submit the report, get it signed, and share it with the field.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#prompt">Get the prompt</a>
+          <a class="btn btn-secondary" href="#reproductions">Browse reproductions</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What it is -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title">What is ReproCrowd?</h2>
+        <p class="lead">
+          Many researchers already reproduce the numbers of a paper in their field — but
+          unsystematically, on their own machine, with the results never leaving their laptop.
+          ReproCrowd makes that systematic.
+        </p>
+        <div class="cards">
+          <div class="card">
+            <h3>Find a prompt</h3>
+            <p>Pick a paper in your field. Copy the ReproCrowd prompt and the versioned rule pack, and feed them to the LLM you already use.</p>
+          </div>
+          <div class="card">
+            <h3>Run the reprocheck</h3>
+            <p>Your agent certifies the paper's <strong>computational reproducibility</strong> — running the shipped code and data as a Reproduction Study.</p>
+          </div>
+          <div class="card">
+            <h3>Submit &amp; get signed</h3>
+            <p>Your agent submits a standardized, machine- and human-readable report to a GitHub repo, where a human reviews and signs it.</p>
+          </div>
+          <div class="card">
+            <h3>Share &amp; compare</h3>
+            <p>The report lands in FLoRA with an AI tag, and anyone can re-run your reprocheck or comment. Reports are comparable because the engine and model are recorded.</p>
+          </div>
+        </div>
+
+        <div class="notice">
+          <strong>What a ReproCrowd certificate claims.</strong>
+          It certifies that a paper's computation is reproducible and executable — a
+          <em>numerical/computational</em> outcome, not a robustness test. It never rules on
+          whether the science is correct, and it never fills the robustness outcome field.
+        </div>
+      </div>
+    </section>
+
+    <!-- The prompt -->
+    <section id="prompt" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">The prompt</h2>
+        <p class="lead">
+          Tell your coding agent (Claude, Codex, DeepSeek, …) to certify the computational
+          reproducibility of a paper. The agent needs nothing else — the rule pack is
+          referenced by the prompt and pinned in the report.
+        </p>
+
+        <div class="prompt-box">
+          <div class="prompt-box-header">
+            <span>ReproCrowd certification prompt</span>
+            <button id="copy-prompt" class="btn btn-small">Copy</button>
+          </div>
+          <pre id="prompt-text"><code>ReproCrowd certification for `10.XXXX/YYYY`.
+
+Certify the computational reproducibility of this paper: run its shipped code and data as a
+Reproduction Study (same methodology, same tools) and record faithfully what reproduces and
+what does not. Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned
+in the report). Produce the artefacts per WORKFLOW.md into a new directory `<slug>-certification`.
+
+Certify that the computation is reproducible and executable. Do NOT rule on whether the
+scientific conclusion is correct. Use the FORRT nanopublication chain vocabulary. Report the
+engine, model + provider, rules version, and environment you used.</code></pre>
+        </div>
+
+        <h3 class="subsection-title">How to use it</h3>
+        <ol class="steps">
+          <li><strong>Copy the prompt.</strong> Replace <code>10.XXXX/YYYY</code> with the paper's DOI.</li>
+          <li><strong>Feed it to your LLM.</strong> Paste it into the coding agent you already use, in a fresh directory.</li>
+          <li><strong>Run it.</strong> The agent reads the rule pack, builds the reproducible pipeline, and certifies the computation.</li>
+          <li><strong>Submit.</strong> The agent writes <code>certificate.json</code>, <code>certificate.md</code>, <code>SIGN-OFF.md</code> and <code>flora-entry.json</code> and opens a pull request.</li>
+          <li><strong>Get signed.</strong> A human reviews the single <code>SIGN-OFF.md</code>, verifies the artifacts, and approves it for FLoRA.</li>
+        </ol>
+
+        <p class="note">
+          Reports are comparable because the <strong>rule pack version, engine, model and
+          provider</strong> are all recorded in the report. See the
+          <a href="https://forrt.org/crowd-repro/v1.0.0" target="_blank" rel="noopener">rule pack v1.0.0</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Upload (mock-up) -->
+    <section id="upload" class="section">
+      <div class="container">
+        <h2 class="section-title">Submit a reproduction</h2>
+        <p class="lead">
+          This is a mock-up: select the certification folder your agent produced, and we'll
+          check it contains what a FORRT reproduction needs. No data leaves your machine.
+        </p>
+
+        <div class="upload-card">
+          <label class="drop-zone" id="drop-zone" for="folder-input">
+            <input id="folder-input" type="file" webkitdirectory directory multiple />
+            <span class="drop-zone-icon">⬇</span>
+            <span class="drop-zone-text">Drop your <code>&lt;slug&gt;-certification</code> folder here, or click to choose</span>
+          </label>
+
+          <div class="upload-status" id="upload-status" aria-live="polite"></div>
+
+          <div class="checklist" id="checklist" hidden>
+            <h3>Required files</h3>
+            <ul id="checklist-list"></ul>
+          </div>
+
+          <div class="upload-actions" id="upload-actions" hidden>
+            <button id="mock-submit" class="btn btn-primary">Submit for review (mock-up)</button>
+          </div>
+
+          <div class="submit-result" id="submit-result" hidden></div>
+        </div>
+
+        <p class="note">
+          A complete FORRT reproduction folder typically carries: a <code>.yml</code> config
+          (e.g. <code>myst.yml</code>), <code>pixi.toml</code>/<code>pixi.lock</code>,
+          <code>Snakefile</code>, <code>nanopubs/PUBLISHED.md</code>, <code>CITATION.cff</code>,
+          <code>certificate.json</code>, <code>SIGN-OFF.md</code> and <code>flora-entry.json</code>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Reproductions overview -->
+    <section id="reproductions" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Reproductions</h2>
+        <p class="lead">
+          All submitted reproductions, with their computational outcome. Search by paper, field
+          or outcome, and filter by verdict. Each row links to the report and to the
+          <a href="https://forrt.org/flora-replication-atlas" target="_blank" rel="noopener">FLoRA Replication Atlas</a>.
+        </p>
+
+        <div class="table-controls">
+          <input id="search" type="search" placeholder="Search title, DOI, field, outcome…" />
+          <select id="filter-outcome" aria-label="Filter by outcome">
+            <option value="">All outcomes</option>
+            <option value="computationally reproducible">Computationally reproducible</option>
+            <option value="computational issues">Computational issues</option>
+            <option value="technical failure">Technical failure</option>
+          </select>
+          <a class="btn btn-secondary" href="https://forrt.org/flora-replication-atlas" target="_blank" rel="noopener">Open FLoRA Atlas</a>
+        </div>
+
+        <div class="table-wrap">
+          <table class="repro-table">
+            <thead>
+              <tr>
+                <th>Paper</th>
+                <th>Field</th>
+                <th>Outcome</th>
+                <th>Engine / model</th>
+                <th>Signed</th>
+                <th>Date</th>
+                <th>Report</th>
+              </tr>
+            </thead>
+            <tbody id="repro-tbody"></tbody>
+          </table>
+        </div>
+        <p class="empty" id="empty" hidden>No reproductions match your search.</p>
+        <p class="count" id="count"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>ReproCrowd — crowdsourced numerical reproductions.</span>
+      <span>
+        <a href="https://github.com/LukasRoeseler/reprocrowd" target="_blank" rel="noopener">GitHub</a>
+        · <a href="https://forrt.org/crowd-repro/v1.0.0" target="_blank" rel="noopener">Rule pack</a>
+        · <a href="https://forrt.org/flora-replication-atlas" target="_blank" rel="noopener">FLoRA Atlas</a>
+      </span>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

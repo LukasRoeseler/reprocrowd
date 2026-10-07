@@ -1,0 +1,80 @@
+[
+  {
+    "id": "RC-2026-001",
+    "doi": "10.1093/ej/ueab096",
+    "title": "Forsythe (2022) — Why don't firms hire young workers during recessions?",
+    "field": "Economics",
+    "outcome": "computationally reproducible",
+    "model": "Claude Opus 4.7",
+    "rule_version": "1.0.0",
+    "date": "2026-10-02",
+    "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-001",
+    "signature": "signed",
+    "findings": { "P0": 0, "P1": 0, "P2": 1, "P3": 2 }
+  },
+  {
+    "id": "RC-2026-002",
+    "doi": "10.1093/qje/qjac034",
+    "title": "Alan, Corekcioglu & Sutter (2023) — Improving workplace climate in large corporations",
+    "field": "Economics",
+    "outcome": "computational issues",
+    "model": "DeepSeek V4",
+    "rule_version": "1.0.0",
+    "date": "2026-10-05",
+    "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-002",
+    "signature": "signed",
+    "findings": { "P0": 1, "P1": 2, "P2": 3, "P3": 1 }
+  },
+  {
+    "id": "RC-2026-003",
+    "doi": "10.1093/restud/rdab056",
+    "title": "Carrera et al. (2022) — Who chooses commitment?",
+    "field": "Economics",
+    "outcome": "computationally reproducible",
+    "model": "Claude Sonnet 4.5",
+    "rule_version": "1.0.0",
+    "date": "2026-09-28",
+    "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-003",
+    "signature": "signed",
+    "findings": { "P0": 0, "P1": 0, "P2": 0, "P3": 1 }
+  },
+  {
+    "id": "RC-2026-004",
+    "doi": "10.1162/rest_a_01182",
+    "title": "Siddique et al. (2024) — Raising health awareness in rural communities",
+    "field": "Economics",
+    "outcome": "technical failure",
+    "model": "OpenAI o4-mini",
+    "rule_version": "1.0.0",
+    "date": "2026-09-30",
+    "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-004",
+    "signature": "signed",
+    "findings": { "P0": 2, "P1": 3, "P2": 1, "P3": 0 }
+  },
+  {
+    "id": "RC-2026-005",
+    "doi": "10.1162/rest_a_01182",
+    "title": "Siddique et al. (2024) — alternative run (independent agent)",
+    "field": "Economics",
+    "outcome": "computational issues",
+    "model": "Gemini 3 Pro",
+    "rule_version": "1.0.0",
+    "date": "2026-10-01",
+    "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-005",
+    "signature": "pending",
+    "findings": { "P0": 1, "P1": 2, "P2": 1, "P3": 1 }
+  },
+  {
+    "id": "RC-2026-006",
+    "doi": "10.1162/jmlr.2014.12345",
+    "title": "Javanmard & Montanari (2014) — Confidence intervals for linear regression",
+    "field": "Machine Learning",
+    "outcome": "computationally reproducible",
+    "model": "Claude Opus 4.7",
+    "rule_version": "1.0.0",
+    "date": "2026-09-25",
+    "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-006",
+    "signature": "signed",
+    "findings": { "P0": 0, "P1": 0, "P2": 1, "P3": 0 }
+  }
+]
