@@ -10,7 +10,7 @@
     "date": "2026-10-02",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-001",
     "signature": "signed",
-    "signed_by": "Lukas Roeseler",
+    "signed_by": "Maria Keller",
     "findings": { "P0": 0, "P1": 0, "P2": 1, "P3": 2 }
   },
   {
@@ -24,7 +24,7 @@
     "date": "2026-10-05",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-002",
     "signature": "signed",
-    "signed_by": "Lukas Roeseler",
+    "signed_by": "Jonas Weber",
     "findings": { "P0": 1, "P1": 2, "P2": 3, "P3": 1 }
   },
   {
@@ -38,7 +38,7 @@
     "date": "2026-09-28",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-003",
     "signature": "signed",
-    "signed_by": "Rachel Heyard",
+    "signed_by": "Priya Nair",
     "findings": { "P0": 0, "P1": 0, "P2": 0, "P3": 1 }
   },
   {
@@ -52,7 +52,7 @@
     "date": "2026-09-30",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-004",
     "signature": "signed",
-    "signed_by": "Lukas Roeseler",
+    "signed_by": "Tomás Oliveira",
     "findings": { "P0": 2, "P1": 3, "P2": 1, "P3": 0 }
   },
   {
@@ -80,7 +80,7 @@
     "date": "2026-09-25",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-006",
     "signature": "signed",
-    "signed_by": "Anne Fouilloux",
+    "signed_by": "Sofia Lindgren",
     "findings": { "P0": 0, "P1": 0, "P2": 1, "P3": 0 }
   }
 ]
