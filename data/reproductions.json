@@ -5,8 +5,14 @@
     "title": "Forsythe (2022) — Why don't firms hire young workers during recessions?",
     "field": "Economics",
     "outcome": "computationally reproducible",
+    "engine": "Claude Code",
     "model": "Claude Opus 4.7",
+    "repro_standard_version": "crowd-repro v1.0.0",
     "rule_version": "1.0.0",
+    "programs": [
+      { "name": "R", "version": "4.6.1", "packages": { "tidyverse": "2.0.0", "fixest": "0.12.0", "estimatr": "1.0.2" }, "lockfile": "renv.lock" },
+      { "name": "Python", "version": "3.8.10", "packages": { "pandas": "2.0.3", "numpy": "1.24.4", "scipy": "1.10.1" }, "lockfile": "requirements.txt" }
+    ],
     "date": "2026-10-02",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-001",
     "signature": "signed",
@@ -19,8 +25,14 @@
     "title": "Alan, Corekcioglu & Sutter (2023) — Improving workplace climate in large corporations",
     "field": "Economics",
     "outcome": "computational issues",
-    "model": "DeepSeek V4",
+    "engine": "opencode",
+    "model": "DeepSeek V4 Flash via uniGPT",
+    "repro_standard_version": "crowd-repro v1.0.0",
     "rule_version": "1.0.0",
+    "programs": [
+      { "name": "Stata", "version": "18", "packages": { "reghdfe": "6.2.3", "estout": "2.3.0" }, "lockfile": null },
+      { "name": "R", "version": "4.6.1", "packages": { "tidyverse": "2.0.0", "fixest": "0.12.0" }, "lockfile": "renv.lock" }
+    ],
     "date": "2026-10-05",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-002",
     "signature": "signed",
@@ -33,8 +45,13 @@
     "title": "Carrera et al. (2022) — Who chooses commitment?",
     "field": "Economics",
     "outcome": "computationally reproducible",
+    "engine": "Claude Code",
     "model": "Claude Sonnet 4.5",
+    "repro_standard_version": "crowd-repro v1.0.0",
     "rule_version": "1.0.0",
+    "programs": [
+      { "name": "R", "version": "4.6.1", "packages": { "tidyverse": "2.0.0", "brms": "2.21.0", "cmdstanr": "0.8.0" }, "lockfile": "renv.lock" }
+    ],
     "date": "2026-09-28",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-003",
     "signature": "signed",
@@ -47,8 +64,13 @@
     "title": "Siddique et al. (2024) — Raising health awareness in rural communities",
     "field": "Economics",
     "outcome": "technical failure",
+    "engine": "Codex",
     "model": "OpenAI o4-mini",
+    "repro_standard_version": "crowd-repro v1.0.0",
     "rule_version": "1.0.0",
+    "programs": [
+      { "name": "R", "version": "4.6.1", "packages": { "tidyverse": "2.0.0", "stargazer": "5.2.3" }, "lockfile": null }
+    ],
     "date": "2026-09-30",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-004",
     "signature": "signed",
@@ -61,8 +83,13 @@
     "title": "Siddique et al. (2024) — alternative run (independent agent)",
     "field": "Economics",
     "outcome": "computational issues",
+    "engine": "Gemini CLI",
     "model": "Gemini 3 Pro",
+    "repro_standard_version": "crowd-repro v1.0.0",
     "rule_version": "1.0.0",
+    "programs": [
+      { "name": "Python", "version": "3.11", "packages": { "pandas": "2.2.2", "numpy": "1.26.4", "scipy": "1.13.0" }, "lockfile": "requirements.txt" }
+    ],
     "date": "2026-10-01",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-005",
     "signature": "pending",
@@ -75,8 +102,14 @@
     "title": "Javanmard & Montanari (2014) — Confidence intervals for linear regression",
     "field": "Machine Learning",
     "outcome": "computationally reproducible",
+    "engine": "Claude Code",
     "model": "Claude Opus 4.7",
+    "repro_standard_version": "crowd-repro v1.0.0",
     "rule_version": "1.0.0",
+    "programs": [
+      { "name": "Python", "version": "3.8.10", "packages": { "numpy": "1.24.4", "scipy": "1.10.1" }, "lockfile": "requirements.txt" },
+      { "name": "R", "version": "4.6.1", "packages": { "glmnet": "5.0", "quadprog": "1.5.8" }, "lockfile": "renv.lock" }
+    ],
     "date": "2026-09-25",
     "repo_url": "https://github.com/LukasRoeseler/reprocrowd/reproductions/RC-2026-006",
     "signature": "signed",

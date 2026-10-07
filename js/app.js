@@ -125,6 +125,17 @@
     return parts.length === 3 ? parts[2] + '/' + parts[1] + '/' + parts[0] : d;
   }
 
+  function programsSummary(programs) {
+    if (!programs || !programs.length) return '—';
+    var text = programs.map(function (p) { return p.name + ' ' + p.version; }).join(' · ');
+    var detail = programs.map(function (p) {
+      var pkgs = p.packages ? Object.keys(p.packages).map(function (k) { return k + ' ' + p.packages[k]; }).join(', ') : '';
+      return p.name + ' ' + p.version + (p.lockfile ? ' (' + p.lockfile + ')' : '') + (pkgs ? ' — ' + pkgs : '');
+    }).join('\n');
+    var safe = detail.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    return '<span class="muted" title="' + safe + '">' + text + '</span>';
+  }
+
   function render(list) {
     tbody.innerHTML = '';
     list.forEach(function (r) {
@@ -134,7 +145,9 @@
           '<br><span class="muted">' + (r.doi || '') + '</span></td>' +
         '<td>' + (r.field || '—') + '</td>' +
         '<td>' + pill(r.outcome) + '</td>' +
-        '<td>' + (r.model || '—') + '<br><span class="muted">v' + (r.rule_version || '?') + '</span></td>' +
+        '<td>' + (r.engine || '—') + '<br><span class="muted">' + (r.model || '') + '</span></td>' +
+        '<td>' + (r.repro_standard_version || '—') + '</td>' +
+        '<td>' + programsSummary(r.programs) + '</td>' +
         '<td>' + (r.signature === 'signed' ? (r.signed_by || '✓') : '—') + '</td>' +
         '<td>' + fmtDate(r.date) + '</td>' +
         '<td><a href="' + r.repo_url + '" target="_blank" rel="noopener">Report</a></td>';
@@ -150,7 +163,7 @@
     var list = rows.filter(function (r) {
       if (oc && r.outcome !== oc) return false;
       if (!q) return true;
-      var hay = [r.title, r.doi, r.field, r.outcome, r.model].join(' ').toLowerCase();
+      var hay = [r.title, r.doi, r.field, r.outcome, r.model, r.engine, r.repro_standard_version].join(' ').toLowerCase();
       return hay.indexOf(q) !== -1;
     });
     render(list);
