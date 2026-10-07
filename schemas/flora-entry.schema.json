@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forrt.org/crowd-repro/flora-entry.schema.json",
+  "title": "ReproCrowd FLoRA import record",
+  "description": "A record that maps a ReproCrowd certificate into the FLoRA reproduction list, tagged as an AI-generated numerical/computational reproduction (outcome_robustness = not checked).",
+  "type": "object",
+  "required": ["schema_version", "ai_generated", "method", "repro_standard_version", "engine", "programs", "github_url", "ref_o", "doi_o", "study_o", "ref_r", "url_r", "abstract_r", "outcome_computational", "outcome_robustness"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "ai_generated": { "type": "boolean", "description": "FLoRA AI-generated tag. true = produced by an LLM coding agent." },
+    "method": { "type": "string", "description": "e.g. 'LLM coding agent (Claude Opus 4.7), ReproCrowd rule pack v1.0.0'." },
+    "repro_standard_version": { "type": "string", "description": "The ReproCrowd / ReproAI standard used, e.g. 'crowd-repro v1.0.0' or the ReproAI rules date '2026.06.27'." },
+    "engine": { "type": "string", "description": "The engine that ran the reprocheck, e.g. 'anomalyco/opencode — DeepSeek V4 Flash via uniGPT'." },
+    "programs": {
+      "type": "array",
+      "description": "Full program inventory: every interpreter, its version, its packages, and the lockfile.",
+      "items": {
+        "type": "object",
+        "required": ["name", "version"],
+        "properties": {
+          "name": { "type": "string", "description": "Interpreter, e.g. 'R', 'Python', 'Stata'." },
+          "version": { "type": "string", "description": "Interpreter version, e.g. '4.6.1'." },
+          "packages": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Package name -> version." },
+          "lockfile": { "type": "string", "description": "Path or identifier of the pinned lockfile, e.g. 'renv.lock'." }
+        }
+      }
+    },
+    "github_url": { "type": "string", "format": "uri", "description": "URL of the GitHub repo where the certificate and artifacts are published. Maps to FLoRA url_r." },
+    "ref_o": { "type": "string", "description": "Original paper, APA with DOI. FLoRA column ref_o." },
+    "doi_o": { "type": "string", "pattern": "^10\\.", "description": "FLoRA column doi_o." },
+    "url_o": { "type": ["string", "null"], "format": "uri", "description": "Optional. FLoRA column url_o." },
+    "study_o": { "type": "string", "description": "The specific claim/study being reproduced. FLoRA column study_o." },
+    "ref_r": { "type": "string", "description": "The reproduction report, APA with DOI. FLoRA column ref_r." },
+    "doi_r": { "type": ["string", "null"], "pattern": "^10\\.", "description": "Optional Zenodo DOI of the reproduction. FLoRA column doi_r." },
+    "url_r": { "type": "string", "format": "uri", "description": "The stable report URL (the GitHub URL). FLoRA column url_r." },
+    "abstract_r": { "type": "string", "description": "Reproduction abstract (not published in the FLoRA dataset). FLoRA column abstract_r." },
+    "outcome_computational": { "type": "string", "enum": ["computationally reproducible", "computational issues", "technical failure", "computation not checked"], "description": "FLoRA column outcome_computation." },
+    "outcome_computational_quote": { "type": "string", "description": "Quote describing the computational outcome. FLoRA column outcome_computational_quote." },
+    "out_quote_computational_source": { "type": "string", "description": "Location of that quote, e.g. 'abstract', 'p. 4'. FLoRA column out_quote_computational_source." },
+    "outcome_robustness": { "type": "string", "const": "not checked", "description": "Always 'not checked' — a ReproCrowd certificate does not test robustness." },
+    "id_challenge": { "type": ["string", "null"], "description": "Optional. FLoRA column 'id challenge'." },
+    "coder": { "type": ["string", "null"], "description": "Optional. FLoRA column Coder." },
+    "validation": { "type": ["string", "null"], "description": "Optional. FLoRA column validation." },
+    "validator": { "type": ["string", "null"], "description": "Optional. FLoRA column validator." },
+    "validator_notes": { "type": ["string", "null"], "description": "Optional. FLoRA column validator_notes." },
+    "alt_identifier_r": { "type": ["string", "null"], "description": "Optional alternative identifier for the reproduction. FLoRA column alt_identifier_r." }
+  }
+}

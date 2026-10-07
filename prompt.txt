@@ -1,6 +1,4 @@
-ReproCrowd certification for `10.XXXX/YYYY`.
-
-Link to the paper's materials, data, and code: <URL to the repository or archive>
+ReproCrowd certification.
 
 Certify the computational reproducibility of this paper: run its shipped code and data as a
 Reproduction Study (same methodology, same tools) and record faithfully what reproduces and
@@ -25,3 +23,6 @@ engine, model + provider, rules version, and environment you used.
 Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned in the report).
 If that URL is unreachable, treat the artefact list above as the requirement and do not skip
 any of the files.
+
+Article link or DOI:
+Code & Data link:

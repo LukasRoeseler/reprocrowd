@@ -1,0 +1,105 @@
+name: Ingest submission
+
+# Auto-merge a ReproCrowd submission: when a contributor attaches a bundle zip to an issue and
+# labels it `submission`, this workflow downloads it, checks completeness + signature, and if it
+# passes, commits it under certifications/<slug>/ and closes the issue. If it fails, it comments
+# with the validation problems and labels the issue `needs-fixes`.
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  ingest:
+    if: github.event.label.name == 'submission'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install validation dependencies
+        run: pip install jsonschema
+
+      - name: Download the attached zip
+        id: download
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BODY=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }} --jq .body)
+          URL=$(echo "$BODY" | grep -oE 'https://github\.com/user-attachments/[^ )"\]]+' | head -n 1)
+          if [ -z "$URL" ]; then
+            echo "::error::No GitHub user-attachments URL found in the issue body. Attach the bundle zip and label the issue 'submission'."
+            exit 1
+          fi
+          curl -sSL -H "Authorization: Bearer $GH_TOKEN" -o submission.zip "$URL"
+          SLUG=$(echo "$URL" | sed 's#.*/##; s#\.zip$##; s#-certification$##')
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "attachment URL: $URL"
+          ls -la submission.zip
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+          git fetch origin main
+          git checkout -B main origin/main
+
+      - name: Validate and merge
+        id: validate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLUG: ${{ steps.download.outputs.slug }}
+        run: |
+          set +e
+          rm -rf extract
+          mkdir -p extract
+          unzip -q submission.zip -d extract
+          ROOT=$(find extract -mindepth 1 -maxdepth 1 -type d | head -n 1)
+          [ -n "$ROOT" ] || ROOT="extract"
+          mkdir -p "certifications/$SLUG"
+          cp -r "$ROOT/." "certifications/$SLUG/"
+          python scripts/validate_bundle.py "certifications/$SLUG" --schemas-dir schemas > validate.log 2>&1
+          CODE=$?
+          set -e
+          cat validate.log
+          echo "code=$CODE" >> "$GITHUB_OUTPUT"
+
+      - name: Merge on pass
+        if: steps.validate.outputs.code == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLUG: ${{ steps.download.outputs.slug }}
+        run: |
+          git add "certifications/$SLUG"
+          git commit -m "Add ReproCrowd certification $SLUG (from issue #${{ github.event.issue.number }})"
+          git push origin main
+          gh issue close ${{ github.event.issue.number }} \
+            --repo ${{ github.repository }} \
+            --comment "Merged into \`certifications/$SLUG/\` and validated (complete + signed). :tada:"
+
+      - name: Comment on failure
+        if: steps.validate.outputs.code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SLUG: ${{ steps.download.outputs.slug }}
+        run: |
+          gh issue edit ${{ github.event.issue.number }} \
+            --repo ${{ github.repository }} --add-label needs-fixes
+          {
+            echo "Validation failed for \`certifications/$SLUG/\`:"
+            echo '```'
+            cat validate.log
+            echo '```'
+          } > comment.md
+          gh issue comment ${{ github.event.issue.number }} \
+            --repo ${{ github.repository }} --body-file comment.md
+          exit 1

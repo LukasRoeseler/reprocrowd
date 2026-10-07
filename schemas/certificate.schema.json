@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://forrt.org/crowd-repro/certificate.schema.json",
+  "title": "ReproCrowd certification report",
+  "type": "object",
+  "required": ["schema_version", "certification_id", "paper", "procedure", "repro_standard_version", "engine", "model", "date", "environment", "claims", "results", "validation_status", "findings", "ai_generated", "github_url"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "certification_id": { "type": "string", "pattern": "^RC-[0-9]{4}-[0-9]{3}$" },
+    "repro_standard_version": { "type": "string", "description": "The ReproCrowd / ReproAI standard used, e.g. 'crowd-repro v1.0.0' or the ReproAI rules date '2026.06.27'." },
+    "paper": {
+      "type": "object",
+      "required": ["doi", "title"],
+      "properties": {
+        "doi": { "type": "string", "pattern": "^10\\." },
+        "title": { "type": "string" },
+        "authors": { "type": "array", "items": { "type": "string" } },
+        "year": { "type": "integer" }
+      }
+    },
+    "procedure": {
+      "type": "object",
+      "required": ["version", "uri"],
+      "properties": {
+        "version": { "type": "string" },
+        "uri": { "type": "string", "format": "uri" }
+      }
+    },
+    "engine": { "type": "string" },
+    "model": {
+      "type": "object",
+      "required": ["name", "provider"],
+      "properties": {
+        "name": { "type": "string" },
+        "provider": { "type": "string" }
+      }
+    },
+    "rules_version": { "type": "string" },
+    "date": { "type": "string", "format": "date" },
+    "ai_generated": { "type": "boolean" },
+    "github_url": { "type": "string", "format": "uri" },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "os": { "type": "string", "description": "Host operating system, e.g. 'Windows (win32)'." },
+        "programs": {
+          "type": "array",
+          "description": "Full program inventory: every interpreter, its version, its packages, and the lockfile.",
+          "items": {
+            "type": "object",
+            "required": ["name", "version"],
+            "properties": {
+              "name": { "type": "string", "description": "Interpreter, e.g. 'R', 'Python', 'Stata'." },
+              "version": { "type": "string", "description": "Interpreter version, e.g. '4.6.1'." },
+              "packages": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Package name -> version." },
+              "lockfile": { "type": "string", "description": "Path or identifier of the pinned lockfile, e.g. 'renv.lock'." }
+            }
+          }
+        },
+        "language": { "type": "string" },
+        "versions": { "type": "object", "additionalProperties": { "type": "string" } },
+        "lockfile": { "type": "string" }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "claim", "exhibit"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^C[0-9]+$" },
+          "claim": { "type": "string" },
+          "exhibit": { "type": "string" },
+          "page": { "type": "integer" }
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "quantity", "reported", "recomputed", "status"],
+        "properties": {
+          "claim_id": { "type": "string" },
+          "quantity": { "type": "string" },
+          "reported": { "type": [ "number", "string" ] },
+          "recomputed": { "type": [ "number", "string" ] },
+          "status": { "type": "string", "enum": ["match", "close", "discrepant", "not_checkable"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "validation_status": { "type": "string", "enum": ["computationally reproducible", "computational issues", "technical failure", "computation not checked"] },
+    "confidence_level": { "type": "string", "enum": ["VeryHighConfidence", "HighConfidence", "Moderate", "LowConfidence", "VeryLowConfidence"] },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "type", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]+-[0-9]{3}$" },
+          "severity": { "type": "string", "enum": ["P0", "P1", "P2", "P3"] },
+          "type": { "type": "string", "enum": ["defect", "normalization"] },
+          "description": { "type": "string" },
+          "evidence": { "type": "string" },
+          "suggested_fix": { "type": "string" }
+        }
+      }
+    },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "pipeline": { "type": "string", "format": "uri" },
+        "zenodo_doi": { "type": "string", "pattern": "^10\\." },
+        "chain_uris": { "type": "array", "items": { "type": "string", "format": "uri" } },
+        "console_log": { "type": "string" }
+      }
+    },
+    "signatories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "orcid": { "type": "string" },
+          "role": { "type": "string", "enum": ["codechecker", "reviewer", "author"] }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "raw_data": { "type": "string" },
+        "processed_data": { "type": "string" },
+        "analysis_script": { "type": "string" }
+      }
+    },
+    "flora": {
+      "type": "object",
+      "description": "Mapping into the FLoRA reproduction list, tagged as an AI-generated numerical/computational reproduction (outcome_robustness = not checked).",
+      "properties": {
+        "entry_type": { "type": "string", "const": "reproduction" },
+        "ai_generated": { "type": "boolean" },
+        "outcome_computational": { "type": "string", "enum": ["computationally reproducible", "computational issues", "technical failure", "computation not checked"] },
+        "outcome_robustness": { "type": "string", "const": "not checked" }
+      },
+      "required": ["entry_type", "ai_generated", "outcome_computational", "outcome_robustness"]
+    }
+  }
+}
