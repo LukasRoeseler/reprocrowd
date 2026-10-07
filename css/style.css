@@ -279,6 +279,11 @@ a { color: var(--accent-dark); }
   border: 1px solid #e6ccd6;
   color: var(--accent-dark);
 }
+.notice.warn {
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+}
 .note { color: var(--muted); }
 .note code { background: var(--alt-bg); padding: .1em .3em; border-radius: 4px; }
 
