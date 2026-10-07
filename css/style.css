@@ -465,6 +465,18 @@ a { color: var(--accent-dark); }
 .pill-bad { background: #fee2e2; color: var(--bad); }
 .pill-muted { background: #e5e7eb; color: var(--muted); }
 
+.badge {
+  display: inline-block;
+  padding: .3rem .7rem;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  vertical-align: middle;
+  margin-left: .6rem;
+}
+.badge-warn { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.badge-note { background: #e5e7eb; color: var(--muted); }
+
 .empty, .count { margin-top: 1rem; color: var(--muted); }
 .count { font-size: .9rem; }
 
