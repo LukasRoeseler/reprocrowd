@@ -60,7 +60,6 @@
 
   var GITHUB_OWNER = 'LukasRoeseler';
   var GITHUB_REPO = 'reprocrowd';
-  var PR_URL = 'https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/compare';
 
   var signoff = document.getElementById('signoff');
   var signoffName = document.getElementById('signoff-name');
@@ -147,14 +146,29 @@
       result.innerHTML =
         '<strong>Signed off by ' + escapeHtml(name) + ' (' + escapeHtml(role) +
         (orcid ? ' · ORCID ' + escapeHtml(orcid) : '') + ').</strong> ' +
-        'Your folder is ready. To save it on GitHub and open a pull request for a human to review:' +
-        '<pre class="git-cmds"><code>cd &lt;slug&gt;-certification\n' +
-        'git init\n' +
-        'git add -A\n' +
-        'git commit -m "ReproCrowd certification"\n' +
-        'git remote add origin https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '.git\n' +
-        'git push -u origin main</code></pre>' +
-        '<a class="btn btn-primary" target="_blank" rel="noopener" href="' + PR_URL + '">Open a pull request on GitHub</a>';
+        'The site is static and cannot write to GitHub for you, so save the folder with git. ' +
+        '<strong>If you have write access</strong> (you own the repo or are a collaborator), push straight to main:' +
+        '<pre class="git-cmds"><code>' +
+        'git clone https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '.git\n' +
+        'cd ' + GITHUB_REPO + '\n' +
+        '# copy your &lt;slug&gt;-certification folder in, e.g. into certifications/&lt;slug&gt;/\n' +
+        'git add certifications/&lt;slug&gt;\n' +
+        'git commit -m "Add ReproCrowd certification &lt;slug&gt;"\n' +
+        'git push origin main</code></pre>' +
+        '<strong>Otherwise</strong> (open contribution), fork the repo, push to a branch named ' +
+        '<code>repro/&lt;slug&gt;</code> (e.g. <code>repro/example-2026-001</code>), and open a pull request:' +
+        '<pre class="git-cmds"><code>' +
+        'git clone https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '.git\n' +
+        'cd ' + GITHUB_REPO + '\n' +
+        'git checkout -b repro/&lt;slug&gt;\n' +
+        '# copy your &lt;slug&gt;-certification folder in, e.g. into certifications/&lt;slug&gt;/\n' +
+        'git add certifications/&lt;slug&gt;\n' +
+        'git commit -m "Add ReproCrowd certification &lt;slug&gt;"\n' +
+        'git push origin repro/&lt;slug&gt;</code></pre>' +
+        '<p class="muted">The commit is what saves the folder - there is nothing to upload via the site itself. ' +
+        'Every submission lands under <code>certifications/&lt;slug&gt;/</code>, and the branch is always ' +
+        'named <code>repro/&lt;slug&gt;</code>.</p>' +
+        '<a class="btn btn-primary" target="_blank" rel="noopener" href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '">Open the repository</a>';
     });
   }
 
