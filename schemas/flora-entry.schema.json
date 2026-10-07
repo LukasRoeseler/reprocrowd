@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://forrt.org/crowd-repro/flora-entry.schema.json",
+  "$id": "https://lukasroeseler.github.io/reprocrowd/schemas/flora-entry.schema.json",
   "title": "ReproCrowd FLoRA import record",
   "description": "A record that maps a ReproCrowd certificate into the FLoRA reproduction list, tagged as an AI-generated numerical/computational reproduction (outcome_robustness = not checked).",
   "type": "object",

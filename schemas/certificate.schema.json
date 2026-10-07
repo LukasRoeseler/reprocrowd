@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://forrt.org/crowd-repro/certificate.schema.json",
+  "$id": "https://lukasroeseler.github.io/reprocrowd/schemas/certificate.schema.json",
   "title": "ReproCrowd certification report",
   "type": "object",
   "required": ["schema_version", "certification_id", "paper", "procedure", "repro_standard_version", "engine", "model", "date", "environment", "claims", "results", "validation_status", "findings", "ai_generated", "github_url"],
