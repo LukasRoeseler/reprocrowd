@@ -16,7 +16,8 @@ This repository hosts the public website (GitHub Pages) for ReproCrowd.
   reproductions table linked to the [FLoRA Replication Atlas](https://forrt.org/flora-replication-atlas).
 - `css/style.css`, `js/app.js` — styling and interactivity (no backend; the upload is a mock-up).
 - `data/reproductions.json` — seed rows for the reproductions table.
-- `logo.png` — the ReproCrowd logo.
+- `hex-sticker.png` — the ReproCrowd hex sticker (transparent background, cropped from `logo.png`).
+- `logo.png` — the full source logo.
 
 ## The workflow
 

@@ -135,7 +135,7 @@
         '<td>' + (r.field || '—') + '</td>' +
         '<td>' + pill(r.outcome) + '</td>' +
         '<td>' + (r.model || '—') + '<br><span class="muted">v' + (r.rule_version || '?') + '</span></td>' +
-        '<td>' + (r.signature === 'signed' ? '✓' : '—') + '</td>' +
+        '<td>' + (r.signature === 'signed' ? (r.signed_by || '✓') : '—') + '</td>' +
         '<td>' + fmtDate(r.date) + '</td>' +
         '<td><a href="' + r.repo_url + '" target="_blank" rel="noopener">Report</a></td>';
       tbody.appendChild(tr);
