@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
 </head>
 <body>
   <div class="ribbon" aria-hidden="true">Proof of Concept. No real data yet.</div>
@@ -166,8 +167,8 @@ any of the files.</code></pre>
         <h2 class="section-title">Submit a reproduction</h2>
         <p class="lead">
           Upload the <code>&lt;slug&gt;-certification</code> folder your agent produced. We check it
-          contains everything a fully reproducible FORRT reproduction needs, then you sign it off
-          and we guide you through saving it on GitHub as a pull request for a human to review.
+          contains everything a fully reproducible FORRT reproduction needs, then you sign it off.
+          Contributors can download the bundle and submit it via a GitHub issue, or push it with git.
         </p>
 
         <div class="upload-card">
@@ -218,6 +219,7 @@ any of the files.</code></pre>
           </div>
 
           <div class="upload-actions" id="upload-actions" hidden>
+            <button id="download-btn" class="btn">Download bundle (.zip)</button>
             <button id="submit-btn" class="btn btn-primary">Submit to GitHub for review</button>
           </div>
 

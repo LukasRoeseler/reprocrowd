@@ -157,6 +157,7 @@ a { color: var(--accent-dark); }
   cursor: pointer;
   transition: background .15s, border-color .15s, color .15s;
 }
+.btn-row { display: flex; gap: .6rem; flex-wrap: wrap; margin: .6rem 0; }
 .btn-primary {
   background: var(--accent);
   color: #fff;

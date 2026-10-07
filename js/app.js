@@ -42,6 +42,9 @@
   var actions = document.getElementById('upload-actions');
   var result = document.getElementById('submit-result');
   var submitBtn = document.getElementById('submit-btn');
+  var downloadBtn = document.getElementById('download-btn');
+  var selectedFiles = [];
+  var topFolder = '';
 
   // Files needed for a ReproCrowd submission. Required = block submission; recommended = full reproducibility (optional).
   var REQUIRED = [
@@ -81,10 +84,18 @@
   }
 
   function handleFiles(fileList) {
+    selectedFiles = [];
+    topFolder = '';
     var paths = [];
     for (var i = 0; i < fileList.length; i++) {
       var f = fileList[i];
-      paths.push((f.webkitRelativePath || f.name || '').replace(/\\/g, '/'));
+      var rel = (f.webkitRelativePath || f.name || '');
+      paths.push(rel.replace(/\\/g, '/'));
+      selectedFiles.push(f);
+      if (!topFolder && rel) {
+        var seg = rel.split(/[\\/]/)[0];
+        if (seg) topFolder = seg;
+      }
     }
     var found = new Set(paths.map(normalize));
     var requiredPresent = 0;
@@ -129,6 +140,48 @@
       if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
     });
   }
+  function slugFromTop() {
+    var s = (topFolder || '').replace(/-certification$/i, '');
+    return s || topFolder || '<slug>';
+  }
+
+  function downloadBundle() {
+    if (!window.JSZip || !selectedFiles.length) {
+      result.hidden = false;
+      result.className = 'submit-result ok';
+      result.innerHTML = '<strong>Almost there.</strong> Select the folder again, then click "Download bundle (.zip)".';
+      return;
+    }
+    var zip = new JSZip();
+    selectedFiles.forEach(function (f) {
+      var rel = (f.webkitRelativePath || f.name || '');
+      zip.file(rel, f);
+    });
+    zip.generateAsync({ type: 'blob' }).then(function (blob) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = (slugFromTop() || 'reprocrowd-certification') + '.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+  }
+
+  function issueUrl() {
+    var slug = slugFromTop();
+    var title = 'ReproCrowd certification: ' + slug;
+    var body = 'Submit a ReproCrowd certification bundle.\n\n' +
+      'Attach the zip of the `<slug>-certification` folder (use "Download bundle (.zip)").\n\n' +
+      '- DOI:\n- Link to materials / data / code:\n- Engine / model / provider:\n- Repro standard version:\n- Outcome (computationally reproducible / computational issues / technical failure / computation not checked):';
+    return 'https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO +
+      '/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
+  }
+
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', downloadBundle);
+  }
+
   if (submitBtn) {
     submitBtn.addEventListener('click', function () {
       var name = signoffName.value.trim();
@@ -146,17 +199,15 @@
       result.innerHTML =
         '<strong>Signed off by ' + escapeHtml(name) + ' (' + escapeHtml(role) +
         (orcid ? ' · ORCID ' + escapeHtml(orcid) : '') + ').</strong> ' +
-        'The site is static and cannot write to GitHub for you, so save the folder with git. ' +
-        '<strong>If you have write access</strong> (you own the repo or are a collaborator), push straight to main:' +
-        '<pre class="git-cmds"><code>' +
-        'git clone https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '.git\n' +
-        'cd ' + GITHUB_REPO + '\n' +
-        '# copy your &lt;slug&gt;-certification folder in, e.g. into certifications/&lt;slug&gt;/\n' +
-        'git add certifications/&lt;slug&gt;\n' +
-        'git commit -m "Add ReproCrowd certification &lt;slug&gt;"\n' +
-        'git push origin main</code></pre>' +
-        '<strong>Otherwise</strong> (open contribution), fork the repo, push to a branch named ' +
-        '<code>repro/&lt;slug&gt;</code> (e.g. <code>repro/example-2026-001</code>), and open a pull request:' +
+        'The site is static and cannot write to GitHub for you. Pick a way to submit:' +
+        '<p class="muted"><strong>No git? Easiest path.</strong> Download the bundle and attach it to a GitHub issue - ' +
+        'the maintainer will merge it.</p>' +
+        '<div class="btn-row">' +
+        '<button class="btn" id="result-download">Download bundle (.zip)</button>' +
+        '<a class="btn btn-primary" target="_blank" rel="noopener" href="' + issueUrl() + '">Open a GitHub issue (attach the zip)</a>' +
+        '</div>' +
+        '<p class="muted"><strong>With git.</strong> If you have write access, push straight to main; ' +
+        'otherwise fork, push to a branch named <code>repro/&lt;slug&gt;</code>, and open a pull request:</p>' +
         '<pre class="git-cmds"><code>' +
         'git clone https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '.git\n' +
         'cd ' + GITHUB_REPO + '\n' +
@@ -165,10 +216,11 @@
         'git add certifications/&lt;slug&gt;\n' +
         'git commit -m "Add ReproCrowd certification &lt;slug&gt;"\n' +
         'git push origin repro/&lt;slug&gt;</code></pre>' +
-        '<p class="muted">The commit is what saves the folder - there is nothing to upload via the site itself. ' +
-        'Every submission lands under <code>certifications/&lt;slug&gt;/</code>, and the branch is always ' +
-        'named <code>repro/&lt;slug&gt;</code>.</p>' +
-        '<a class="btn btn-primary" target="_blank" rel="noopener" href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '">Open the repository</a>';
+        '<p class="muted">Every submission lands under <code>certifications/&lt;slug&gt;/</code>. ' +
+        'The commit (or the issue) is what saves the folder - there is nothing to upload via the site itself.</p>' +
+        '<a class="btn" target="_blank" rel="noopener" href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '">Open the repository</a>';
+      var rd = document.getElementById('result-download');
+      if (rd) rd.addEventListener('click', downloadBundle);
     });
   }
 
