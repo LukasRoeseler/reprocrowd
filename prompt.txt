@@ -5,9 +5,23 @@ Link to the paper's materials, data, and code: <URL to the repository or archive
 Certify the computational reproducibility of this paper: run its shipped code and data as a
 Reproduction Study (same methodology, same tools) and record faithfully what reproduces and
 what does not. Do NOT upload the original data or code; the licence may not permit it. Link to
-them instead. Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned
-in the report). Produce the artefacts per WORKFLOW.md into a new directory `<slug>-certification`.
+them instead.
+
+Work in a new directory `<slug>-certification` and produce the whole reproducible bundle, so the
+folder can be re-run from scratch. It must contain ALL of these files:
+- myst.yml (the reproducible-report config)
+- pixi.toml and pixi.lock (the pinned environment, every dependency versioned)
+- Snakefile (the end-to-end workflow; `snakemake --cores 1` re-runs it)
+- notebooks/01_data_download.py, 02_data_clean.py, 03_analysis.py, 04_figures.py
+- environment.json (the full program inventory: host OS, interpreter versions, package versions, lockfile)
+- nanopubs/PUBLISHED.md (the FORRT nanopublication chain URIs)
+- CITATION.cff (the citation metadata)
+- certificate.json, certificate.md, SIGN-OFF.md, flora-entry.json (the report and sign-off)
 
 Certify that the computation is reproducible and executable. Do NOT rule on whether the
 scientific conclusion is correct. Use the FORRT nanopublication chain vocabulary. Report the
 engine, model + provider, rules version, and environment you used.
+
+Follow the ReproCrowd rule pack (https://forrt.org/crowd-repro, version pinned in the report).
+If that URL is unreachable, treat the artefact list above as the requirement and do not skip
+any of the files.
